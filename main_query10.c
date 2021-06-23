@@ -12,7 +12,7 @@
 
 int main(int argc, char *argv[]){								// receives arguments via terminal
 	long int l_tab1, l_tab2, tuples_counter = 0;
-	uint32_t i = 0, j = 0, size;
+	uint32_t i = 0, j = 0, l = 0, size;
 	int hits_counter[66], k = 0;
 	FILE *input_tab, *output_file;								// declare pointer to the files
 	char line[1000], *token = NULL, *result = NULL, *p, buffer[25], file_name[12] = "tempos"; 
@@ -52,10 +52,26 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
 	}
+	c_name[0] = (char *)malloc(sizeof(char) * 35 * l_tab1); 	// allocates the big vector 
+	if (c_name[0] == NULL){									// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab1; l++){								// rearranges the pointers  
+		c_name[l] = c_name[0] + (l * 35 * sizeof(char));
+	}	
 	c_address = (char **)malloc(l_tab1 * sizeof(char *));		// variable text, size 40
 	if (c_address == NULL){										// if malloc returns NULL, there is not enough memory
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
+	}
+	c_address[0] = (char *)malloc(sizeof(char) * 50 * l_tab1); 	// allocates the big vector 
+	if (c_address[0] == NULL){									// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab1; l++){								// rearranges the pointers  
+		c_address[l] = c_address[0] + (l * 50 * sizeof(char));
 	}
 	c_nationkey = malloc(l_tab1 * sizeof(int));					// 25 nations are populated
 	if (c_nationkey == NULL){									// if malloc returns NULL, there is not enough memory
@@ -67,6 +83,14 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
 	}
+	c_phone[0] = (char *)malloc(sizeof(char) * 25 * l_tab1); 	// allocates the big vector 
+	if (c_phone[0] == NULL){									// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab1; l++){								// rearranges the pointers  
+		c_phone[l] = c_phone[0] + (l * 25 * sizeof(char));
+	}
 	c_acctbal = malloc(l_tab1 * sizeof(float));					// decimal
 	if (c_acctbal == NULL){										// if malloc returns NULL, there is not enough memory
 		printf("Erro. Espaço de memória insuficiente.\n");
@@ -77,10 +101,26 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
 	}
+	c_mktsegment[0] = (char *)malloc(sizeof(char) * 20 * l_tab1); 	// allocates the big vector 
+	if (c_mktsegment[0] == NULL){								// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab1; l++){								// rearranges the pointers  
+		c_mktsegment[l] = c_mktsegment[0] + (l * 20 * sizeof(char));
+	}
 	c_comment = (char **)malloc(l_tab1 * sizeof(char *));		// variable text, size 117
 	if (c_comment == NULL){										// if malloc returns NULL, there is not enough memory
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
+	}
+	c_comment[0] = (char *)malloc(sizeof(char) * 117 * l_tab1); // allocates the big vector 
+	if (c_comment[0] == NULL){									// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab1; l++){								// rearranges the pointers  
+		c_comment[l] = c_comment[0] + (l * 117 * sizeof(char));
 	}
 	o_orderkey = malloc(l_tab2 * sizeof(uint32_t));				// SF*1.500.000 are sparsely populated
 	if (o_orderkey == NULL){									// if malloc returns NULL, there is not enough memory
@@ -97,6 +137,14 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
 	}
+	o_orderstatus[0] = (char *)malloc(sizeof(char) * 2 * l_tab2);	// allocates the big vector 
+	if (o_orderstatus[0] == NULL){								// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab2; l++){								// rearranges the pointers  
+		o_orderstatus[l] = o_orderstatus[0] + (l * 2 * sizeof(char));
+	}
 	o_totalprice = malloc(l_tab2 * sizeof(float));				// decimal
 	if (o_totalprice == NULL){									// if malloc returns NULL, there is not enough memory
 		printf("Erro. Espaço de memória insuficiente.\n");
@@ -108,15 +156,39 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
 	}
+	o_orderdate[0] = (char *)malloc(sizeof(char) * 20 * l_tab2);	// allocates the big vector 
+	if (o_orderdate[0] == NULL){								// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab2; l++){								// rearranges the pointers  
+		o_orderdate[l] = o_orderdate[0] + (l * 20 * sizeof(char));
+	}
 	o_orderpriority = (char **)malloc(l_tab2 * sizeof(char *)); // fixed text, size 15
 	if (o_orderpriority == NULL){								// if malloc returns NULL, there is not enough memory
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
 	}
+	o_orderpriority[0] = (char *)malloc(sizeof(char) * 20 * l_tab2);	// allocates the big vector 
+	if (o_orderpriority[0] == NULL){							// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab2; l++){								// rearranges the pointers  
+		o_orderpriority[l] = o_orderpriority[0] + (l * 20 * sizeof(char));
+	}
 	o_clerk = (char **)malloc(l_tab2 * sizeof(char *));			// fixed text, size 15
 	if (o_clerk == NULL){										// if malloc returns NULL, there is not enough memory
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
+	}
+	o_clerk[0] = (char *)malloc(sizeof(char) * 25 * l_tab2);	// allocates the big vector 
+	if (o_clerk[0] == NULL){									// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab2; l++){								// rearranges the pointers  
+		o_clerk[l] = o_clerk[0] + (l * 25 * sizeof(char));
 	}
 	o_shippriority = malloc(l_tab2 * sizeof(int));				// integer
 	if (o_shippriority == NULL){								// if malloc returns NULL, there is not enough memory
@@ -128,6 +200,14 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 		printf("Erro. Espaço de memória insuficiente.\n");
 		exit(1);
 	}
+	o_comment[0] = (char *)malloc(sizeof(char) * 79 * l_tab2);	// allocates the big vector 
+	if (o_comment[0] == NULL){									// if malloc returns NULL, there is not enough memory
+		printf("Erro. Espaço de memória insuficiente.\n");
+		exit(1);
+	}
+	for (l = 0; l < l_tab2; l++){								// rearranges the pointers  
+		o_comment[l] = o_comment[0] + (l * 79 * sizeof(char));
+	}	
 	printf("Reservou os espaços de memória para as tabelas de entrada.\n");
 	ticks[1] = clock();
 	elapsedtime = (ticks[1] - ticks[0]) * 1000.0 / CLOCKS_PER_SEC;
@@ -137,6 +217,7 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 	printf("Tempo decorrido para reservar os espaços de memória para as tabelas de entrada: %g ms\n\n", elapsedtime);
 	
 	ticks[0] = clock();
+	
 	// STORE CUSTOMER TAB
 	input_tab = fopen(argv[2], "r");							// read the file that is in the element of the argv array
 	if (!input_tab){
@@ -155,20 +236,10 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 					c_custkey[i] = (uint32_t) atol(token);		// copy token to c_custkey[i] and convert string to unsigned int 32
 			token = strtok(NULL, "|");
 			if (j == 0 && i < l_tab1){
-				c_name[i] = (char *)malloc(sizeof(char) * 35);
-				if (c_name[i] == NULL){							// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(c_name[i], token);					// copy token to c_name[i]
 			}
 			if (j == 1 && i < l_tab1){
-				c_address[i] = (char *)malloc(50 * sizeof(char));
-				if (c_address[i] == NULL){						// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(c_address[i], token);				// copy token to c_address[i]
 			}
@@ -177,11 +248,6 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 					c_nationkey[i] = atoi(token);				// copy token to c_nationkey[i] and convert string to integer
 			}
 			if (j == 3 && i < l_tab1){
-				c_phone[i] = (char *)malloc(25 * sizeof(char));
-				if (c_phone[i] == NULL){						// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(c_phone[i], token);					// copy token to c_phone[i]
 			}
@@ -190,20 +256,10 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 					c_acctbal[i] = atof(token); 				// copy token to c_acctbal[i] and convert string to float
 			}
 			if (j == 5 && i < l_tab1){
-				c_mktsegment[i] = (char *)malloc(20 * sizeof(char));
-				if (c_mktsegment[i] == NULL){					// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(c_mktsegment[i], token);				// copy token to c_mktsegment[i]
 			}			
 			if (j == 6 && i < l_tab1){
-				c_comment[i] = (char *)malloc(117 * sizeof(char));
-				if (c_comment[i] == NULL){						// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(c_comment[i], token);				// copy token to c_comment[i]
 			}
@@ -235,11 +291,6 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 					o_custkey[i] = (uint32_t) atol(token);		// copy token to o_custkey[i] and convert string to unsigned int 32
 			}
 			if (j == 1 && i < l_tab2){
-				o_orderstatus[i] = (char *)malloc(2 * sizeof(char));
-				if (o_orderstatus[i] == NULL){					// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(o_orderstatus[i], token);			// copy token to o_orderstatus[i]
 			}
@@ -248,29 +299,14 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 					o_totalprice[i] = atol(token);				// copy token to o_totalprice[i] and convert string to long int
 			}
 			if (j == 3 && i < l_tab2){
-				o_orderdate[i] = (char *)malloc(20 * sizeof(char));
-				if (o_orderdate[i] == NULL){					// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(o_orderdate[i], token);				// copy token to o_orderdate[i]
 			}
 			if (j == 4 && i < l_tab2){
-				o_orderpriority[i] = (char *)malloc(20 * sizeof(char));
-				if (o_orderpriority[i] == NULL){				// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(o_orderpriority[i], token);			// copy token to o_orderpriority[i]
 			}
 			if (j == 5 && i < l_tab2){
-				o_clerk[i] = (char *)malloc(25 * sizeof(char));
-				if (o_clerk[i] == NULL){						// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(o_clerk[i], token);					// copy token to o_clerk[i]
 			}
@@ -279,11 +315,6 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 					o_shippriority[i] = atoi(token);			// copy token to o_shippriority[i] and convert string to integer
 			}
 			if (j == 7 && i < l_tab2){
-				o_comment[i] = (char *)malloc(79 * sizeof(char));
-				if (o_comment[i] == NULL){						// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				if (token != NULL)
 					strcpy(o_comment[i], token);				// copy token to o_comment[i]
 			}
@@ -310,12 +341,12 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 		// MURMURHASH3		
 		if (strcmp(argv[1], "murmur3") == 0){
 			// BUILD PHASE - HASH TABLE CONSTRUCTION USING THE SMALLEST TABLE
-			table = (malloc(size * sizeof(htype)));						// allocation of the hash table vector
+			table = (malloc(size * sizeof(htype)));				// allocation of the hash table vector
 			if (!table){
 				printf("Erro. Espaço de memória insuficiente para criação da tabela hash.\n");
 				exit(1);
 			} 
-			init_table(table, size);									// hash table initialization
+			init_table(table, size);							// hash table initialization
 			init_counter(&counter);	
 			uint32_t key, index, match_key;
 			for (i = 0; i < l_tab1; i++){
@@ -349,18 +380,28 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 				printf("Erro. Espaço de memória insuficiente.\n");
 				exit(1);
 			}
-			for (i = 0; i < l_tab2; i++){
+			/*for (i = 0; i < l_tab2; i++){
 				out_name[i] = (char *)malloc(sizeof(char) * 35);
 				if (out_name[i] == NULL){						// if malloc returns NULL, there is not enough memory
 					printf("Erro. Espaço de memória insuficiente.\n");
 					exit(1);
 				}
+			}*/
+			out_name[0] = (char *)malloc(sizeof(char) * 35 * l_tab2); 	// allocates the big vector 
+			if (out_name[0] == NULL){									// if malloc returns NULL, there is not enough memory
+				printf("Erro. Espaço de memória insuficiente.\n");
+				exit(1);
+			}
+			for (i = 0; i < l_tab2; i++){								// rearranges the pointers  
+				out_name[i] = out_name[0] + (i * 35 * sizeof(char));
+			}	
+			for (i = 0; i < l_tab2; i++){
 				key = o_custkey[i];								// key receives o_custekey[i]
 				index = murmurhash_index(key, size);			// "index" receives an index created using murmur3_32 hash
 				match_key = verify(key, index, table);			// checks matches beetwen the largest and the smallest table keys
 				if (match_key > 0){								// when it finds a match, it creates query 10 outputs
 					out_custkey[i] = match_key;					// out_custkey[i] receives match_key
-					strcpy(out_name[i], c_name[match_key - 1]);	// copy c_name[match_key - 1] to out_name[i]
+					memcpy(out_name[i], c_name[match_key - 1], strlen(c_name[match_key - 1])+1);	// copy c_name[match_key - 1] to out_name[i]
 					tuples_counter++;
 				}
 			}
@@ -368,12 +409,12 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 		//FNV-1A
 		else{
 			// BUILD PHASE - HASH TABLE CONSTRUCTION USING THE SMALLEST TABLE
-			table = (malloc(size * sizeof(htype)));						// allocation of the hash table vector
+			table = (malloc(size * sizeof(htype)));				// allocation of the hash table vector
 			if (!table){
 				printf("Erro. Espaço de memória insuficiente para criação da tabela hash.\n");
 				exit(1);
 			} 
-			init_table(table, size);									// hash table initialization
+			init_table(table, size);							// hash table initialization
 			init_counter(&counter);	
 			uint32_t key, index, match_key;
 			for (i = 0; i < l_tab1; i++){
@@ -392,7 +433,8 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 			//print_hashtable(table, size);						// prints the hash table
 			//init_hits_counter(hits_counter);					// hits_counter initialization
 			//histogram(table, hits_counter, size);				// prints data to make an histogram about collisions in the hash table
-			
+
+			ticks[0] = clock();			
 			// PROBE PHASE - CHECKS MATCHES IN THE LARGEST TABLE
 			out_custkey = malloc(l_tab2 * sizeof(uint32_t));			// SF*1500000 are populated
 			if (out_custkey == NULL){									// if malloc returns NULL, there is not enough memory
@@ -405,23 +447,25 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 				printf("Erro. Espaço de memória insuficiente.\n");
 				exit(1);
 			}
+			out_name[0] = (char *)malloc(sizeof(char) * 35 * l_tab2); 	// allocates the big vector 
+			if (out_name[0] == NULL){									// if malloc returns NULL, there is not enough memory
+				printf("Erro. Espaço de memória insuficiente.\n");
+				exit(1);
+			}
+			for (i = 0; i < l_tab2; i++){								// rearranges the pointers  
+				out_name[i] = out_name[0] + (i * 35 * sizeof(char));
+			}	
 			for (i = 0; i < l_tab2; i++){
-				out_name[i] = (char *)malloc(sizeof(char) * 35);
-				if (out_name[i] == NULL){						// if malloc returns NULL, there is not enough memory
-					printf("Erro. Espaço de memória insuficiente.\n");
-					exit(1);
-				}
 				key = o_custkey[i];								// key receives o_custekey[i]
 				index = fnv1a_index(key, size);					// "index" receives an index created using murmur3_32 hash
 				match_key = verify(key, index, table);			// checks matches beetwen the largest and the smallest table keys
 				if (match_key > 0){								// when it finds a match, it creates query 10 outputs
 					out_custkey[i] = match_key;					// out_custkey[i] receives match_key
-					//out_name[i] = (char *)malloc(sizeof(char) * 35);
 					if (out_name[i] == NULL){					// if malloc returns NULL, there is not enough memory
 						printf("Erro. Espaço de memória insuficiente.\n");
 						exit(1);
 					}
-					strcpy(out_name[i], c_name[match_key - 1]);	// copy c_name[match_key - 1] to out_name[i]
+					memcpy(out_name[i], c_name[match_key - 1], strlen(c_name[match_key - 1])+1);	// copy c_name[match_key - 1] to out_name[i]
 					tuples_counter++;
 				}
 			}
@@ -490,7 +534,8 @@ int main(int argc, char *argv[]){								// receives arguments via terminal
 	k++;
 	//TIME STAMP
 	printf("Tempo decorrido para liberar os espaços de memória: %g ms\n\n", elapsedtime);
-
+	
+	
 	totalticks[1] = clock();
 	elapsedtime = (totalticks[1] - totalticks[0]) * 1000.0 / CLOCKS_PER_SEC;
 	time_register[k] = elapsedtime;

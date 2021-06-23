@@ -17,7 +17,17 @@ uint32_t verify(uint32_t key, uint32_t index, htype *table){
 	htype *aux;
 	aux = &table[index];
 
-	if (table[index].key == 0)							// position is empty
+	if (table[index].key != 0) {
+		for (int i = 0; i < table[index].hits; i++){
+			if (aux->key == key){						// a match was found
+				return key;
+			}			
+			aux = aux->next;
+		}
+	}
+	return 0;											// it was a collision without match or the position is empty
+}
+	/*if (table[index].key == 0)						// position is empty
 		return 0;
 	else{
 		for (int i = 0; i < table[index].hits; i++){
@@ -29,7 +39,7 @@ uint32_t verify(uint32_t key, uint32_t index, htype *table){
 		}
 		return 0;										// it was a collision without match
 	}
-}
+}*/
 
 //*********************************************
 //	2. Vector initialization function

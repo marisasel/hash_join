@@ -19,7 +19,7 @@ void init_table(htype *table, uint32_t size){
 	for (i = 0; i < size; i++){
 		table[i].key = 0;								// this value cannot be created, so it signals an empty index
 		table[i].hits = 0;								// it signals that the index was never accessed
-		table[i].match = 0;								// it signals that the key doesn't have a correspondence
+		//table[i].match = 0;							// it signals that the key doesn't have a correspondence
 		table[i].next = NULL;							// end of hash sequence
 	}
 	return;
@@ -37,7 +37,6 @@ void init_counter(ctype *counter){
 //*********************************************
 //	3. Store value in hash table function
 //*********************************************
-//void store(long int key, uint32_t index, htype *table, ctype *counter){
 void store(uint32_t key, uint32_t index, htype *table, ctype *counter){
 	htype *node;
 
@@ -48,16 +47,13 @@ void store(uint32_t key, uint32_t index, htype *table, ctype *counter){
 	}
 	// there's a collision or a pseudo collision (repeated pseudo number)
 	// if there's a pseudo collision in the hash table vector
-	if (table[index].key == key){						// a pseudo collision was found
+	if (table[index].key == key){					// a pseudo collision was found
 		counter->number_repetition++;
 		return;
 	}
 	// else, a collision list is created or a value is added in the collision list
 	else{
-		//#pragma omp critical
-		//{
 		node = (malloc(sizeof(htype)));				
-		//}
 		if (!node){
 			printf("Erro. Espaço de memória insuficiente para criação da tabela de colisão.\n");
 			return;
@@ -78,7 +74,6 @@ void store(uint32_t key, uint32_t index, htype *table, ctype *counter){
 		// union with the new node
 		old->next = node;
 		node->next = NULL;
-		//printf("\nA chave guardada no último nodo do index %u é %u\n", index, node->key);	//APAGAR
 		counter->collision++;							// increment of the collision counter
 		table[index].hits++;
 		return;
@@ -99,7 +94,6 @@ void init_hits_counter(int *hits_counter){
 //*********************************************
 //	5. Histogram generator function
 //*********************************************
-//void histogram(htype *table, int *hits_counter, long int size){
 void histogram(htype *table, int *hits_counter, uint32_t size){
 	register uint32_t i;
 

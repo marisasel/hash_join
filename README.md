@@ -63,13 +63,10 @@ There are three "hidden" (as comments) functions in both codes:
 -------------------------------
 1. To compile the code:
 -------------------------------
-$gcc main_query10.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -O3 -o query10 -lm
+$gcc -O3 main_query10.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -o query10 -lm
 
 For the parallel version, do:
-$gcc -fopenmp main_query10_parallel.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -O3 -o query10parallel -lm
-
-gcc main_query10_parallel_teste.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -O3 -o query10parallel_teste -lm
-./query10parallel_teste murmur3 customer.tbl 150000 orders.tbl 1500000 8191
+gcc -O3 main_query10_parallel.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -o query10parallel -lm
 
 -------------------------------
 2. To execute the code:
@@ -104,10 +101,10 @@ https://primes.utm.edu/lists/small/100000.txt
 -------------------------------
 1. To compile the code:
 -------------------------------
-$gcc main_query11.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -o query11 -lm
+$gcc -O3 main_query11.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -o query11 -lm
 
 For the parallel version, do:
-$gcc -fopenmp main_query11_parallel.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -O3 -o query11parallel -lm
+$gcc -O3 main_query11_parallel.c header.h hash_table.c murmurhash3.c hash_join.c fnv1a.c -o query11parallel -lm
 
 -------------------------------
 2. To execute the code:
